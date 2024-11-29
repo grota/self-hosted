@@ -3,8 +3,8 @@ services:
     image: stirlingtools/stirling-pdf:latest-fat
     container_name: stirling-pdf
     restart: unless-stopped
-    ports:
-      - '8080:8080'
+    # ports:
+    #   - '8080:8080'
     volumes:
       - /usr/share/tessdata:/usr/share/tessdata
       - ./extraConfigs:/configs
@@ -13,8 +13,9 @@ services:
       DOCKER_ENABLE_SECURITY: false
       INSTALL_BOOK_AND_ADVANCED_HTML_OPS: false
       LANGS: "en_GB,en_US,es_ES,it_IT"
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
 
-networks:
-  default:
-    external: true
-    name: network-for-nginx-proxy-manager
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml

@@ -1,14 +1,20 @@
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml
+
 services:
   beszel:
     image: 'henrygd/beszel'
     container_name: 'beszel'
     restart: unless-stopped
-    ports:
-      - '8090:8090'
+    # ports:
+    #   - '8090:8090'
     volumes:
       - ./beszel_data:/beszel_data
     extra_hosts:
       - 'host.docker.internal:host-gateway'
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
 
   beszel-agent:
     image: "henrygd/beszel-agent"
@@ -22,3 +28,6 @@ services:
     environment:
       PORT: 45876
       KEY: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMW3bWq06dvHpEYptDnT+gT67MgZPWc07PB/NhCA0S6u"
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging

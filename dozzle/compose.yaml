@@ -5,8 +5,14 @@ services:
     restart: unless-stopped
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-    ports:
-      - 8883:8080
+    # ports:
+    #   - 8883:8080
     environment:
       - DOZZLE_HOSTNAME='mele-4c'
       - DOZZLE_NO_ANALYTICS=true
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml

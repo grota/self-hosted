@@ -1,10 +1,13 @@
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml
+
 services:
   dockge:
     image: louislam/dockge:1
     restart: unless-stopped
     container_name: dockge
-    ports:
-      - 5001:5001
+    # ports:
+    #   - 5001:5001
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./data:/app/data
@@ -16,3 +19,6 @@ services:
     environment:
       # Tell Dockge where to find the stacks
       - DOCKGE_STACKS_DIR=/home/grota/selfhost
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
