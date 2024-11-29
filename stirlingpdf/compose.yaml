@@ -1,0 +1,13 @@
+services:
+  stirling-pdf:
+    image: stirlingtools/stirling-pdf:latest
+    ports:
+      - '7070:8080'
+    volumes:
+      - /usr/share/tessdata:/usr/share/tessdata
+      - ./extraConfigs:/configs
+      - ./logs:/logs/
+    environment:
+      DOCKER_ENABLE_SECURITY: false
+      INSTALL_BOOK_AND_ADVANCED_HTML_OPS: false
+      LANGS: "en_GB,en_US,es_ES,it_IT"
