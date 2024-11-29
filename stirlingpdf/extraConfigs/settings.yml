@@ -16,7 +16,7 @@ security:
   csrfDisabled: true # set to 'true' to disable CSRF protection (not recommended for production)
   loginAttemptCount: 5 # lock user account after 5 tries; when using e.g. Fail2Ban you can deactivate the function with -1
   loginResetTimeMinutes: 120 # lock account for 2 hours after x attempts
-  loginMethod: all # 'all' (Login Username/Password and OAuth2[must be enabled and configured]), 'normal'(only Login with Username/Password) or 'oauth2'(only Login with OAuth2)
+  loginMethod: all # Accepts values like 'all' and 'normal'(only Login with Username/Password), 'oauth2'(only Login with OAuth2) or 'saml2'(only Login with SAML2)
   initialLogin:
     username: '' # initial username for the first login
     password: '' # initial password for the first login
@@ -48,7 +48,7 @@ security:
     scopes: openid, profile, email # specify the scopes for which the application will request permissions
     provider: google # set this to your OAuth provider's name, e.g., 'google' or 'keycloak'
   saml2:
-    enabled: false # currently in alpha, not recommended for use yet, enableAlphaFunctionality must be set to true
+    enabled: false # Only enabled for paid enterprise clients (enterpriseEdition.enabled must be true)
     autoCreateUser: false # set to 'true' to allow auto-creation of non-existing users
     blockRegistration: false # set to 'true' to deny login with SSO without prior registration by an admin
     registrationId: stirling
@@ -100,13 +100,11 @@ metrics:
 
 # Automatically Generated Settings (Do Not Edit Directly)
 AutomaticallyGenerated:
-  # Automatically Generated Settings (Do Not Edit Directly)
   key: b2c65aac-c7a5-4052-8f53-7adcd0806d95
-  # Automatically Generated Settings (Do Not Edit Directly)
   UUID: 9cc0a600-3171-445f-b577-410b6bb731c2
 
 processExecutor:
-  sessionLimit:    # Process executor instances limits
+  sessionLimit: # Process executor instances limits
     libreOfficeSessionLimit: 1
     pdfToHtmlSessionLimit: 1
     ocrMyPdfSessionLimit: 2
@@ -115,7 +113,9 @@ processExecutor:
     weasyPrintSessionLimit: 16
     installAppSessionLimit: 1
     calibreSessionLimit: 1
-  timeoutMinutes:    # Process executor timeout in minutes
+    qpdfSessionLimit: 4
+    tesseractSessionLimit: 1
+  timeoutMinutes: # Process executor timeout in minutes
     libreOfficetimeoutMinutes: 30
     pdfToHtmltimeoutMinutes: 20
     pythonOpenCvtimeoutMinutes: 30
@@ -123,3 +123,4 @@ processExecutor:
     weasyPrinttimeoutMinutes: 30
     installApptimeoutMinutes: 60
     calibretimeoutMinutes: 30
+    tesseractTimeoutMinutes: 30
