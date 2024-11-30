@@ -1,0 +1,29 @@
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml
+
+services:
+  # https://github.com/qdm12/ddns-updater
+  ddns-updater:
+    image: qmcgaw/ddns-updater
+    container_name: ddns-updater
+    # ports:
+    #   - 8000:8000/tcp
+    volumes:
+      - ./data:/updater/data
+    environment:
+      LISTENING_ADDRESS: :8000
+    restart: always
+
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+
+# {
+#     "settings": [
+#         {
+#             "provider": "namecheap",
+#             "domain": "*.giusepperota.com,giusepperota.com",
+#             "password": "get from namecheap web admin interface in dynamic dns section"
+#         }
+#     ]
+# }
