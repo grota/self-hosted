@@ -1,0 +1,4 @@
+networks:
+  network-postgres:
+    external: true
+    name: network-postgres
