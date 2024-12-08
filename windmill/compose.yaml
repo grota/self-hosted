@@ -10,7 +10,7 @@ services:
       DATABASE_URL:
       MODE: server
     volumes:
-      - worker_logs:/tmp/windmill/logs
+      - $PWD/logs:/tmp/windmill/logs
     networks:
       - default
       - network-postgres
@@ -29,7 +29,7 @@ services:
     volumes:
       # mount the docker socket to allow to run docker containers from within the workers
       - /var/run/docker.sock:/var/run/docker.sock
-      - worker_logs:/tmp/windmill/logs
+      - $PWD/logs:/tmp/windmill/logs
       - ${PWD}/data/windmill/worker/cache:/tmp/windmill/cache
     networks:
       - default
@@ -48,7 +48,7 @@ services:
       MODE: worker
       WORKER_GROUP: native
     volumes:
-      - worker_logs:/tmp/windmill/logs
+      - $PWD/logs:/tmp/windmill/logs
     networks:
       - default
       - network-postgres
@@ -62,17 +62,13 @@ services:
     # expose:
     #   - 3001
     volumes:
-      - lsp_cache:/root/.cache
+      - $PWD/lsp_cache:/root/.cache
     networks:
       - default
       - network-postgres
     extends:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
-
-volumes:
-  worker_logs: null
-  lsp_cache: null
 
 include:
   - ../compose-snippets/network-postgres.yaml

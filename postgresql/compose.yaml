@@ -7,7 +7,7 @@ services:
       # POSTGRES_USER:
       # POSTGRES_DB:
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - $PWD/postgres_data:/var/lib/postgresql/data
       - ${PWD}/data/postgres/inits/:/docker-entrypoint-initdb.d/
     restart: unless-stopped
     healthcheck:
@@ -25,6 +25,3 @@ services:
 
 include:
   - ../compose-snippets/network-postgres.yaml
-
-volumes:
-  postgres_data:
