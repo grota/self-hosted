@@ -1,0 +1,79 @@
+services:
+  windmill_server:
+    image: ${WM_IMAGE}
+    # pull_policy: always
+    restart: unless-stopped
+    # expose:
+    #   - 8000
+    #   - 2525
+    environment:
+      DATABASE_URL:
+      MODE: server
+    volumes:
+      - worker_logs:/tmp/windmill/logs
+    networks:
+      - default
+      - network-postgres
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+
+  windmill_worker:
+    image: ${WM_IMAGE}
+    # pull_policy: always
+    environment:
+      DATABASE_URL:
+      MODE: worker
+      WORKER_GROUP: default
+    # to mount the worker folder to debug, KEEP_JOB_DIR=true and mount /tmp/windmill
+    volumes:
+      # mount the docker socket to allow to run docker containers from within the workers
+      - /var/run/docker.sock:/var/run/docker.sock
+      - worker_logs:/tmp/windmill/logs
+      - ${PWD}/data/windmill/worker/cache:/tmp/windmill/cache
+    networks:
+      - default
+      - network-postgres
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+
+  windmill_worker_native:
+    image: ${WM_IMAGE}
+    pull_policy: always
+    environment:
+      DATABASE_URL:
+      NUM_WORKERS: 2
+      SLEEP_QUEUE: 200
+      MODE: worker
+      WORKER_GROUP: native
+    volumes:
+      - worker_logs:/tmp/windmill/logs
+    networks:
+      - default
+      - network-postgres
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+
+  lsp:
+    image: ghcr.io/windmill-labs/windmill-lsp:latest
+    pull_policy: always
+    # expose:
+    #   - 3001
+    volumes:
+      - lsp_cache:/root/.cache
+    networks:
+      - default
+      - network-postgres
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+
+volumes:
+  worker_logs: null
+  lsp_cache: null
+
+include:
+  - ../compose-snippets/network-postgres.yaml
+  - ../compose-snippets/network-for-nginx-proxy.yaml
