@@ -10,7 +10,7 @@ services:
       # 💡 This is the Pi-Hole Container's IP Address
       WG_DEFAULT_DNS: 192.168.0.153
       WG_DEFAULT_ADDRESS: 10.8.0.x
-      WG_DEVICE: enp1s0
+      WG_DEVICE: eth0
     image: ghcr.io/wg-easy/wg-easy
     container_name: wg-easy
     volumes:
