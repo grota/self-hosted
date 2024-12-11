@@ -17,3 +17,13 @@ services:
     extends:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
+    labels:
+      - homepage.group=System
+      - homepage.name=Nginx Proxy Manager
+      - homepage.href=//reverse-proxy.home.lab
+      - homepage.icon=sh-nginx-proxy-manager
+      - homepage.weight=10
+      - homepage.widget.type=npm
+      - homepage.widget.url=http://reverse-proxy.home.lab
+      - homepage.widget.username=$USERNAME_FOR_WIDGET
+      - homepage.widget.password=$PASSWORD_FOR_WIDGET

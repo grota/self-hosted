@@ -17,8 +17,15 @@ services:
       # ⚠️ 2. Left Stacks Path === Right Stacks Path (MUST)
       - /home/grota/selfhost:/home/grota/selfhost
     environment:
-      # Tell Dockge where to find the stacks
       - DOCKGE_STACKS_DIR=/home/grota/selfhost
     extends:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
+
+    labels:
+      - homepage.group=System
+      - homepage.name=Dockge
+      - homepage.href=//dockge.home.lab
+      - homepage.icon=sh-dockge
+      - homepage.description=docker compose manager
+      - homepage.weight=0

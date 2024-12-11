@@ -18,6 +18,12 @@ services:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
 
+    labels:
+      - homepage.group=System
+      - homepage.name=DDNS-updater
+      - homepage.href=//ddns.home.lab
+      - homepage.icon=sh-ddns-updater
+      - homepage.weight=-10
 # {
 #     "settings": [
 #         {

@@ -7,8 +7,8 @@ services:
       # POSTGRES_USER:
       # POSTGRES_DB:
     volumes:
-      - $PWD/postgres_data:/var/lib/postgresql/data
-      - ${PWD}/data/postgres/inits/:/docker-entrypoint-initdb.d/
+      - ./postgres_data:/var/lib/postgresql/data
+      - ./data/postgres/inits/:/docker-entrypoint-initdb.d/
     restart: unless-stopped
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]

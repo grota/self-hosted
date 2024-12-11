@@ -8,17 +8,25 @@ services:
       PGADMIN_DISABLE_POSTFIX: 1
     # ports:
     #   - 8080:80
-    volumes:
-      - ${PWD}/servers.json:/pgadmin4/servers.json
-      # needs on host: sudo chown 5050 data/pgadmin/pgadmin4.db
-      # needs on host: sudo chmod  600 data/pgadmin/pgadmin4.db
-      - ${PWD}/pgadmin4.db:/var/lib/pgadmin/pgadmin4.db
+    # volumes:
+    #   - ./servers.json:/pgadmin4/servers.json
+    #   # needs on host: sudo chown 5050 data/pgadmin/pgadmin4.db
+    #   # needs on host: sudo chmod  600 data/pgadmin/pgadmin4.db
+    #   - ./pgadmin4.db:/var/lib/pgadmin/pgadmin4.db
     extends:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
     networks:
       - default
       - network-postgres
+
+    labels:
+      - homepage.group=Apps
+      - homepage.name=pgAdmin
+      - homepage.href=//pgadmin.home.lab
+      - homepage.icon=sh-postgresql
+      - homepage.description=PostgreSQL web administration.
+      - homepage.weight=20
 
 include:
   - ../compose-snippets/network-for-nginx-proxy.yaml

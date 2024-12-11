@@ -1,0 +1,16 @@
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml
+
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    # ports:
+    #   - 3000:3000
+    volumes:
+      - ./config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock
+    restart: unless-stopped
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging

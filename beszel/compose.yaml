@@ -15,6 +15,18 @@ services:
     extends:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
+    labels:
+      - homepage.group=System
+      - homepage.name=Beszel
+      - homepage.href=//beszel.home.lab
+      - homepage.icon=sh-beszel-light
+      - homepage.description=server monitor with historical data
+      - homepage.weight=20
+      - homepage.widget.type=beszel
+      - homepage.widget.url=http://beszel.home.lab
+      - homepage.widget.username=$USERNAME_FOR_WIDGET
+      - homepage.widget.password=$PASSWORD_FOR_WIDGET
+      - homepage.widget.systemId=kx16aow6okh3by2
 
   beszel-agent:
     image: "henrygd/beszel-agent"

@@ -10,13 +10,21 @@ services:
       DATABASE_URL:
       MODE: server
     volumes:
-      - $PWD/logs:/tmp/windmill/logs
+      - ./logs:/tmp/windmill/logs
     networks:
       - default
       - network-postgres
     extends:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
+
+    labels:
+      - homepage.group=Apps
+      - homepage.name=Windmill
+      - homepage.href=//windmill.home.lab
+      - homepage.icon=sh-windmill
+      - homepage.description=developer platform and workflow engine
+      - homepage.weight=10
 
   windmill_worker:
     image: ${WM_IMAGE}
@@ -29,8 +37,8 @@ services:
     volumes:
       # mount the docker socket to allow to run docker containers from within the workers
       - /var/run/docker.sock:/var/run/docker.sock
-      - $PWD/logs:/tmp/windmill/logs
-      - ${PWD}/data/windmill/worker/cache:/tmp/windmill/cache
+      - ./logs:/tmp/windmill/logs
+      - ./data/windmill/worker/cache:/tmp/windmill/cache
     networks:
       - default
       - network-postgres
@@ -48,7 +56,7 @@ services:
       MODE: worker
       WORKER_GROUP: native
     volumes:
-      - $PWD/logs:/tmp/windmill/logs
+      - ./logs:/tmp/windmill/logs
     networks:
       - default
       - network-postgres
@@ -56,13 +64,13 @@ services:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
 
-  lsp:
+  windmill_lsp:
     image: ghcr.io/windmill-labs/windmill-lsp:latest
     pull_policy: always
     # expose:
     #   - 3001
     volumes:
-      - $PWD/lsp_cache:/root/.cache
+      - ./lsp_cache:/root/.cache
     networks:
       - default
       - network-postgres

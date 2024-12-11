@@ -14,7 +14,7 @@ services:
     image: ghcr.io/wg-easy/wg-easy
     container_name: wg-easy
     volumes:
-      - $PWD/etc_wireguard:/etc/wireguard
+      - ./etc_wireguard:/etc/wireguard
     ports:
       - "51820:51820/udp"
       - "51821:51821/tcp"
@@ -28,3 +28,11 @@ services:
     extends:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
+
+    labels:
+      - homepage.group=Apps
+      - homepage.name=wg-easy
+      - homepage.href=//vpn.home.lab
+      - homepage.icon=sh-wireguard
+      - homepage.description=Wireguard
+      - homepage.weight=20

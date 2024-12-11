@@ -17,5 +17,13 @@ services:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
 
+    labels:
+      - homepage.group=Apps
+      - homepage.name=Stirling
+      - homepage.href=//stirling.home.lab
+      - homepage.icon=sh-stirling-pdf
+      - homepage.description=PDF tools
+      - homepage.weight=80
+
 include:
   - ../compose-snippets/network-for-nginx-proxy.yaml
