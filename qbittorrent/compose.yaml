@@ -1,0 +1,38 @@
+services:
+  qbittorrent:
+    image: lscr.io/linuxserver/qbittorrent:latest
+    container_name: qbittorrent
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Madrid
+      - WEBUI_PORT=8080
+      - TORRENTING_PORT=6881
+    volumes:
+      - ./config:/config
+      - type: volume
+        source: usbdisk-on-raspberry-pi
+        target: /downloads
+        volume:
+          nocopy: true
+          subpath: downloaded
+    network_mode: "container:gluetun"
+    # ports:
+    #   - 8080:8080     # see WEBUI_PORT
+    #   - 6881:6881     # see TORRENTING_PORT
+    #   - 6881:6881/udp # see TORRENTING_PORT
+    labels:
+      - homepage.group=*Arr
+      - homepage.name=qBittorrent
+      - homepage.href=//beszel.home.lab
+      - homepage.icon=sh-qbittorrent
+      - homepage.description=bittorrent client
+      - homepage.weight=10
+      - homepage.widget.type=qbittorrent
+      - homepage.widget.url=http://qbt.home.lab
+      - homepage.widget.username=$USERNAME_FOR_WIDGET
+      - homepage.widget.password=$PASSWORD_FOR_WIDGET
+
+include:
+  - ../compose-snippets/volume-usbdisk-on-raspberry-pi.yaml

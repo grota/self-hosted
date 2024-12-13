@@ -19,5 +19,6 @@ services:
       - gluetun_default
 
 networks:
+  # needed by the gluetun widget to query gluetun's control server.
   gluetun_default:
     external: true

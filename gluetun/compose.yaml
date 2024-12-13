@@ -7,12 +7,12 @@ services:
       - NET_ADMIN
     devices:
       - /dev/net/tun:/dev/net/tun
-    # ports:
-    #   - 8888:8888/tcp # HTTP proxy
-    #   - 8388:8388/tcp # Shadowsocks
-    #   - 8388:8388/udp # Shadowsocks
+    ports:
+    #   - 8888:8888/tcp # HTTP proxy, unused for the moment
+    #   - 8388:8388/tcp # Shadowsocks, gluetun's default is disabled
+    #   - 8388:8388/udp # Shadowsocks, gluetun's default is disabled
     #
-    #   - 8099:8099     # qbittorrent web ui
+      - 8080:8080     # qbittorrent web ui
     #   - 6881:6881     # qbittorrent tcp and udp connection ports https://hub.docker.com/r/linuxserver/qbittorrent
     #   - 6881:6881/udp # qbittorrent tcp and udp connection ports https://hub.docker.com/r/linuxserver/qbittorrent
     volumes:
