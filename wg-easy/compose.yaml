@@ -2,13 +2,13 @@ services:
   wg-easy:
     environment:
       # The server's hostname (clients will connect to):
-      WG_HOST: vpn.giusepperota.com
+      WG_HOST:
 
       # The Web UI Password:
       PASSWORD_HASH: $$2a$$12$$DS4l/vvpOH2CkS4GeUGRruGM6fcbvYvBBPx2P7ncqS.HvqKrPFPfm
 
       # 💡 This is the Pi-Hole Container's IP Address
-      WG_DEFAULT_DNS: 192.168.0.153
+      WG_DEFAULT_DNS:
       WG_DEFAULT_ADDRESS: 10.8.0.x
       WG_DEVICE: eth0
     image: ghcr.io/wg-easy/wg-easy

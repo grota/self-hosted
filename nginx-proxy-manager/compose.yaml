@@ -2,9 +2,10 @@ include:
   - ../compose-snippets/network-for-nginx-proxy.yaml
 
 services:
-  app:
+  nginx-proxy-manager:
     image: 'jc21/nginx-proxy-manager:latest'
     restart: unless-stopped
+    container_name: nginx-proxy-manager
     # extra_hosts:
     #   - 'host.docker.internal:host-gateway'
     ports:
