@@ -22,6 +22,9 @@ services:
     #   - 8080:8080     # see WEBUI_PORT
     #   - 6881:6881     # see TORRENTING_PORT
     #   - 6881:6881/udp # see TORRENTING_PORT
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
     labels:
       - homepage.group=*Arr
       - homepage.name=qBittorrent

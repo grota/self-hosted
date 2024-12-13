@@ -1,0 +1,36 @@
+services:
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Madrid
+    volumes:
+      - ./config:/config
+      - type: volume
+        source: usbdisk-on-raspberry-pi
+        target: /data
+        volume:
+          nocopy: true
+    # network_mode: "container:gluetun"
+    # ports:
+    #   - 7878:7878
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+    labels:
+      - homepage.group=*Arr
+      - homepage.name=radarr
+      - homepage.href=//radarr.home.lab
+      - homepage.icon=sh-radarr
+      - homepage.description=Movie organizer/manager
+      - homepage.weight=15
+      - homepage.widget.type=radarr
+      - homepage.widget.url=http://radarr.home.lab
+      - homepage.widget.key=$KEY_FOR_WIDGET
+
+include:
+  - ../compose-snippets/volume-usbdisk-on-raspberry-pi.yaml
+  - ../compose-snippets/network-for-nginx-proxy.yaml
