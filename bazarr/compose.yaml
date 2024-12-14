@@ -1,7 +1,7 @@
 services:
-  radarr:
-    image: lscr.io/linuxserver/radarr:latest
-    container_name: radarr
+  bazarr:
+    image: lscr.io/linuxserver/bazarr:latest
+    container_name: bazarr
     restart: unless-stopped
     environment:
       - PUID=1000
@@ -15,21 +15,20 @@ services:
         volume:
           nocopy: true
     # ports:
-    #   - 7878:7878
+    #   - 6767:6767
     extends:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
     labels:
       - homepage.group=*Arr
-      - homepage.name=radarr
-      - homepage.href=//radarr.home.lab
-      - homepage.icon=sh-radarr
-      - homepage.description=Movie organizer/manager
-      - homepage.weight=15
-      - homepage.widget.type=radarr
-      - homepage.widget.url=http://radarr.home.lab
+      - homepage.name=bazarr
+      - homepage.href=//bazarr.home.lab
+      - homepage.icon=sh-bazarr
+      - homepage.description=Subtitles
+      - homepage.weight=60
+      - homepage.widget.type=bazarr
+      - homepage.widget.url=http://bazarr.home.lab
       - homepage.widget.key=$KEY_FOR_WIDGET
-      - homepage.widget.enableQueue=true
 
 include:
   - ../compose-snippets/volume-usbdisk-on-raspberry-pi.yaml

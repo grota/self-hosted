@@ -1,7 +1,7 @@
 services:
-  radarr:
-    image: lscr.io/linuxserver/radarr:latest
-    container_name: radarr
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
     restart: unless-stopped
     environment:
       - PUID=1000
@@ -15,19 +15,19 @@ services:
         volume:
           nocopy: true
     # ports:
-    #   - 7878:7878
+    #   - 8989:8989
     extends:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
     labels:
       - homepage.group=*Arr
-      - homepage.name=radarr
-      - homepage.href=//radarr.home.lab
-      - homepage.icon=sh-radarr
-      - homepage.description=Movie organizer/manager
-      - homepage.weight=15
-      - homepage.widget.type=radarr
-      - homepage.widget.url=http://radarr.home.lab
+      - homepage.name=sonarr
+      - homepage.href=//sonarr.home.lab
+      - homepage.icon=sh-sonarr
+      - homepage.description=TV organizer/manager
+      - homepage.weight=20
+      - homepage.widget.type=sonarr
+      - homepage.widget.url=http://sonarr.home.lab
       - homepage.widget.key=$KEY_FOR_WIDGET
       - homepage.widget.enableQueue=true
 

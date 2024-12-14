@@ -9,6 +9,7 @@ services:
     #   - 3000:3000
     volumes:
       - ./config:/app/config
+      - ./assets:/app/public/custom_assets
       - /var/run/docker.sock:/var/run/docker.sock
     restart: unless-stopped
     extends:
@@ -19,6 +20,5 @@ services:
       - gluetun_default
 
 networks:
-  # needed by the gluetun widget to query gluetun's control server.
-  gluetun_default:
+  gluetun_default: # needed by the gluetun widget to query gluetun's control server.
     external: true

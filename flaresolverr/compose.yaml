@@ -1,0 +1,18 @@
+services:
+  flaresolverr:
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    restart: unless-stopped
+    container_name: flaresolverr
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL:-info}
+      - LOG_HTML=${LOG_HTML:-false}
+      - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
+      - TZ=Europe/Madrid
+    ports:
+      - "${PORT:-8191}:8191" # test: see if prowlarr can use this.
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml

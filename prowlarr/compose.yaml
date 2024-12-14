@@ -1,0 +1,27 @@
+services:
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:latest
+    container_name: prowlarr
+    restart: unless-stopped
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Madrid
+    volumes:
+      - ./config:/config
+    network_mode: "container:gluetun" # needs this because some website are only reachable via vpn
+    # ports:
+    #   - 9696:9696
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+    labels:
+      - homepage.group=*Arr
+      - homepage.name=prowlarr
+      - homepage.href=//prowlarr.home.lab
+      - homepage.icon=sh-prowlarr
+      - homepage.description=bittorrent api proxy
+      - homepage.weight=55
+      - homepage.widget.type=prowlarr
+      - homepage.widget.url=http://prowlarr.home.lab
+      - homepage.widget.key=$KEY_FOR_WIDGET

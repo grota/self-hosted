@@ -15,6 +15,7 @@ services:
       - 8080:8080     # qbittorrent web ui
     #   - 6881:6881     # qbittorrent tcp and udp connection ports https://hub.docker.com/r/linuxserver/qbittorrent
     #   - 6881:6881/udp # qbittorrent tcp and udp connection ports https://hub.docker.com/r/linuxserver/qbittorrent
+      - 9696:9696     # prowlarr web ui
     volumes:
       - ./config:/gluetun
     environment:

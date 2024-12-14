@@ -28,10 +28,10 @@ services:
     labels:
       - homepage.group=*Arr
       - homepage.name=qBittorrent
-      - homepage.href=//beszel.home.lab
+      - homepage.href=//qbt.home.lab
       - homepage.icon=sh-qbittorrent
       - homepage.description=bittorrent client
-      - homepage.weight=10
+      - homepage.weight=50
       - homepage.widget.type=qbittorrent
       - homepage.widget.url=http://qbt.home.lab
       - homepage.widget.username=$USERNAME_FOR_WIDGET
