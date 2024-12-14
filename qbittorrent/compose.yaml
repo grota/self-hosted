@@ -1,14 +1,22 @@
+include:
+  - ../compose-snippets/volume-usbdisk-on-raspberry-pi.yaml
+
 services:
   qbittorrent:
     image: lscr.io/linuxserver/qbittorrent:latest
-    container_name: qbittorrent
-    restart: unless-stopped
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/Madrid
       - WEBUI_PORT=8080
       - TORRENTING_PORT=6881
+
+    network_mode: "container:gluetun"
+    # ports:
+    #   - 8080:8080     # see WEBUI_PORT
+    #   - 6881:6881     # see TORRENTING_PORT
+    #   - 6881:6881/udp # see TORRENTING_PORT
+
     volumes:
       - ./config:/config
       - type: volume
@@ -17,11 +25,7 @@ services:
         volume:
           nocopy: true
           subpath: downloaded
-    network_mode: "container:gluetun"
-    # ports:
-    #   - 8080:8080     # see WEBUI_PORT
-    #   - 6881:6881     # see TORRENTING_PORT
-    #   - 6881:6881/udp # see TORRENTING_PORT
+
     extends:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
@@ -37,5 +41,5 @@ services:
       - homepage.widget.username=$USERNAME_FOR_WIDGET
       - homepage.widget.password=$PASSWORD_FOR_WIDGET
 
-include:
-  - ../compose-snippets/volume-usbdisk-on-raspberry-pi.yaml
+    container_name: qbittorrent
+    restart: unless-stopped

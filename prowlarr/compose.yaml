@@ -9,7 +9,7 @@ services:
       - TZ=Europe/Madrid
     volumes:
       - ./config:/config
-    network_mode: "container:gluetun" # needs this because some website are only reachable via vpn
+    network_mode: "container:gluetun" # needs this because some websites are only reachable via vpn
     # ports:
     #   - 9696:9696
     extends:

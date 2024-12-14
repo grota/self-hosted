@@ -8,11 +8,10 @@ services:
       - LOG_HTML=${LOG_HTML:-false}
       - CAPTCHA_SOLVER=${CAPTCHA_SOLVER:-none}
       - TZ=Europe/Madrid
-    ports:
-      - "${PORT:-8191}:8191" # test: see if prowlarr can use this.
     extends:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
 
-include:
-  - ../compose-snippets/network-for-nginx-proxy.yaml
+    # ports:
+    #   - "${PORT:-8191}:8191"
+    network_mode: "container:gluetun" # needs this because prowlarr needs to reach flaresolverr (and with this it will do so via localhost:8191).

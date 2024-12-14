@@ -1,23 +1,26 @@
 services:
   gluetun:
     image: qmcgaw/gluetun:v3
-    container_name: gluetun
-    restart: unless-stopped
     cap_add:
       - NET_ADMIN
     devices:
       - /dev/net/tun:/dev/net/tun
+
     ports:
+      - 8000:8000     # gluetun's control server port, exposed for the homepage gluetun widget.
     #   - 8888:8888/tcp # HTTP proxy, unused for the moment
     #   - 8388:8388/tcp # Shadowsocks, gluetun's default is disabled
     #   - 8388:8388/udp # Shadowsocks, gluetun's default is disabled
     #
-      - 8080:8080     # qbittorrent web ui
+      - 8080:8080     # qbittorrent web ui port
     #   - 6881:6881     # qbittorrent tcp and udp connection ports https://hub.docker.com/r/linuxserver/qbittorrent
     #   - 6881:6881/udp # qbittorrent tcp and udp connection ports https://hub.docker.com/r/linuxserver/qbittorrent
-      - 9696:9696     # prowlarr web ui
+      - 9696:9696     # prowlarr web ui port
+      - 8191:8191     # flaresolverr port
+
     volumes:
       - ./config:/gluetun
+
     environment:
       # See https://github.com/qdm12/gluetun-wiki/tree/main/setup#setup
       - VPN_SERVICE_PROVIDER=nordvpn
@@ -38,8 +41,11 @@ services:
       - homepage.description=docker vpn toolkit
       - homepage.weight=20
       - homepage.widget.type=gluetun
-      - homepage.widget.url=http://gluetun:8000
+      - homepage.widget.url=http://gluetun-control-server.home.lab
 
     extends:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
+
+    restart: unless-stopped
+    container_name: gluetun
