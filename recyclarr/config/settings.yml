@@ -1,0 +1,9 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/master/schemas/settings-schema.json
+
+repositories:
+  trash_guides:
+      clone_url: https://github.com/grota/trash-guides.git
+      branch: master
+  config_templates:
+      clone_url: https://github.com/recyclarr/config-templates.git
+      branch: master

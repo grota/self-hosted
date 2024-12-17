@@ -1,0 +1,17 @@
+# Examples:
+# docker compose run --rm recyclarr sync
+# docker compose run --rm recyclarr sync --preview
+# docker compose run --rm recyclarr sync radarr -p #same as --preview
+# docker compose run --rm recyclarr config list templates --includes
+services:
+  recyclarr:
+    image: ghcr.io/recyclarr/recyclarr:7
+    container_name: recyclarr
+    user: 1000:1000
+    volumes:
+      - ./config:/config
+    environment:
+      - TZ=Europe/Madrid
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging

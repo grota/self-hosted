@@ -21,10 +21,9 @@ services:
       - ./config:/config
       - type: volume
         source: usbdisk-on-raspberry-pi
-        target: /downloads
+        target: /data
         volume:
           nocopy: true
-          subpath: downloaded
 
     extends:
       file: ../compose-snippets/logging-limits.yaml

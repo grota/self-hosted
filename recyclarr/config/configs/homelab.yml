@@ -1,0 +1,35 @@
+###################################################################################################
+# Recyclarr Configuration Template: HD Bluray + WEB                                               #
+# Updated: 2024-10-02                                                                             #
+# Documentation: https://recyclarr.dev                                                            #
+# Note: If you are using multiple profiles in a single instance, please read the following        #
+# documentation about file merging:                                                               #
+# https://recyclarr.dev/wiki/yaml/config-examples/#merge-single-instance                          #
+###################################################################################################
+
+# Instance Definition: https://recyclarr.dev/wiki/yaml/config-reference/basic/
+radarr:
+  homelab:
+    base_url: http://radarr.home.lab
+    api_key: 2b3bf07c3bdb43778cf59f1ce6f05c8a
+    delete_old_custom_formats: true
+    replace_existing_custom_formats: true
+
+    include:
+      - template: radarr-quality-definition-movie
+      - template: radarr-quality-profile-hd-bluray-web
+      - template: radarr-custom-formats-hd-bluray-web
+      - config: radarr-my-quality-profiles.yml
+      - config: radarr-my-custom-formats.yml
+
+    custom_formats:
+      - trash_ids:
+          # Uncomment the next six lines to allow x265 HD releases with HDR/DV
+      #     - dc98083864ea246d05a42df0d05f81cc # x265 (HD)
+      #   assign_scores_to:
+      #     - name: HD Bluray + WEB
+      #       score: 0
+      # - trash_ids:
+      #     - 839bea857ed2c0a8e084f3cbdbd65ecb # x265 (no HDR/DV)
+        assign_scores_to:
+          - name: HD Bluray + WEB
