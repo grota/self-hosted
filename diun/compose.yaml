@@ -18,7 +18,7 @@ services:
       - DIUN_NOTIF_TELEGRAM_TOKEN=$DIUN_NOTIF_TELEGRAM_TOKEN
       - DIUN_NOTIF_TELEGRAM_CHATIDS=DIUN_NOTIF_TELEGRAM_CHATIDS
       - DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT=true
-      - 'DIUN_NOTIF_TELEGRAM_TEMPLATEBODY=Docker tag {{ if .Entry.Image.HubLink }}[{{ .Entry.Image }}]({{ .Entry.Image.HubLink }}){{ else }}{{ .Entry.Image }}{{ end }} which you subscribed to through {{ .Entry.Provider }} provider has been {{ if (eq .Entry.Status "new") }}newly added{{ else }}updated{{ end }} on {{ escapeMarkdown .Meta.Hostname }}.'
+      - 'DIUN_NOTIF_TELEGRAM_TEMPLATEBODY=Docker tag {{ if .Entry.Image.HubLink }}[{{ .Entry.Image }}]({{ .Entry.Image.HubLink }}){{ else }}{{ .Entry.Image }}{{ end }} has been {{ if (eq .Entry.Status "new") }}newly added{{ else }}updated{{ end }}.'
 
     restart: unless-stopped
     extends:

@@ -9,7 +9,6 @@ services:
       - TZ=Europe/Madrid
     volumes:
       - ./config:/config
-    network_mode: "container:gluetun" # needs this because some websites are only reachable via vpn
     # ports:
     #   - 9696:9696
     extends:
@@ -25,3 +24,6 @@ services:
       - homepage.widget.type=prowlarr
       - homepage.widget.url=http://prowlarr.home.lab
       - homepage.widget.key=$KEY_FOR_WIDGET
+
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml

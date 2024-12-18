@@ -8,7 +8,7 @@ services:
 
     ports:
       - 8000:8000     # gluetun's control server port, exposed for the homepage gluetun widget.
-    #   - 8888:8888/tcp # HTTP proxy, unused for the moment
+      - 8888:8888/tcp # HTTP proxy, used by prowlarr
     #   - 8388:8388/tcp # Shadowsocks, gluetun's default is disabled
     #   - 8388:8388/udp # Shadowsocks, gluetun's default is disabled
     #
@@ -16,7 +16,7 @@ services:
     #   - 6881:6881     # qbittorrent tcp and udp connection ports https://hub.docker.com/r/linuxserver/qbittorrent
     #   - 6881:6881/udp # qbittorrent tcp and udp connection ports https://hub.docker.com/r/linuxserver/qbittorrent
       - 9696:9696     # prowlarr web ui port
-      - 8191:8191     # flaresolverr port
+      # - 8191:8191     # flaresolverr port, unused atm.
 
     volumes:
       - ./config:/gluetun
@@ -29,6 +29,7 @@ services:
       - SERVER_COUNTRIES=United States
       - TZ=Europe/Rome
       - HTTPPROXY=on
+      # - HTTPPROXY_LOG=on
       - UPDATER_PERIOD=72h
       # Workaround for qbittorent + gluetun "stalled" issue,
       # see https://github.com/qdm12/gluetun/issues/1407 https://github.com/qdm12/gluetun/issues/1277

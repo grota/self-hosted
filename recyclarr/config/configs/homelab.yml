@@ -9,7 +9,7 @@
 
 # Instance Definition: https://recyclarr.dev/wiki/yaml/config-reference/basic/
 radarr:
-  homelab:
+  radarr-mele-4c:
     base_url: http://radarr.home.lab
     api_key: 2b3bf07c3bdb43778cf59f1ce6f05c8a
     delete_old_custom_formats: true
@@ -33,3 +33,29 @@ radarr:
       #     - 839bea857ed2c0a8e084f3cbdbd65ecb # x265 (no HDR/DV)
         assign_scores_to:
           - name: HD Bluray + WEB
+
+sonarr:
+  sonarr-mele-4c:
+    base_url: http://sonarr.home.lab
+    api_key: 28ae302c822f4220a51287f11628064d
+    delete_old_custom_formats: true
+    replace_existing_custom_formats: true
+
+    include:
+      - template: sonarr-quality-definition-series
+      - template: sonarr-v4-quality-profile-web-1080p-alternative
+      - template: sonarr-v4-custom-formats-web-1080p
+      - config: sonarr-my-quality-profiles.yml
+      - config: sonarr-my-custom-formats.yml
+
+    custom_formats:
+      - trash_ids:
+          # Uncomment the next six lines to allow x265 HD releases with HDR/DV
+          # - 47435ece6b99a0b477caf360e79ba0bb # x265 (HD)
+        # assign_scores_to:
+          # - name: WEB-1080p
+            # score: 0
+      # - trash_ids:
+          # - 9b64dff695c2115facf1b6ea59c9bd07 # x265 (no HDR/DV)
+        assign_scores_to:
+          - name: WEB-1080p

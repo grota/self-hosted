@@ -1,0 +1,84 @@
+quality_profiles:
+  - name: 'Original-Lang 1080p'
+    # Cannot use anchors, should be same (for the 1080p part) as below
+    reset_unmatched_scores:
+      enabled: true
+    upgrade:
+      allowed: true
+      until_quality: WEB 1080p
+      until_score: 10000
+    min_format_score: 0
+    quality_sort: top
+    qualities:
+      - name: WEB 1080p
+        qualities:
+          - WEBDL-1080p
+          - WEBRip-1080p
+      - name: Bluray-1080p
+      - name: HDTV-1080p
+
+  - name: 'Original-Lang 720p'
+    # Cannot use anchors, should be same (for the 720p part) as below
+    reset_unmatched_scores:
+      enabled: true
+    upgrade:
+      allowed: true
+      until_quality: WEB 720p
+      until_score: 10000
+    min_format_score: 0
+    quality_sort: top
+    qualities:
+      - name: WEB 720p
+        qualities:
+          - WEBDL-720p
+          - WEBRip-720p
+      - name: Bluray-720p
+      - name: HDTV-720p
+
+  - name: 'Italian 1080p or 720p'
+    # Cannot use anchors, should be same as below
+    reset_unmatched_scores:
+      enabled: true
+    upgrade:
+      allowed: true
+      until_quality: WEB 1080p
+      until_score: 10000
+    min_format_score: 0
+    quality_sort: top
+    qualities:
+      - name: WEB 1080p
+        qualities:
+          - WEBDL-1080p
+          - WEBRip-1080p
+      - name: Bluray-1080p
+      - name: HDTV-1080p
+      - name: WEB 720p
+        qualities:
+          - WEBDL-720p
+          - WEBRip-720p
+      - name: Bluray-720p
+      - name: HDTV-720p
+
+  - name: 'Spanish 1080p or 720p'
+    # Cannot use anchors, should be same as above
+    reset_unmatched_scores:
+      enabled: true
+    upgrade:
+      allowed: true
+      until_quality: WEB 1080p
+      until_score: 10000
+    min_format_score: 0
+    quality_sort: top
+    qualities:
+      - name: WEB 1080p
+        qualities:
+          - WEBDL-1080p
+          - WEBRip-1080p
+      - name: Bluray-1080p
+      - name: HDTV-1080p
+      - name: WEB 720p
+        qualities:
+          - WEBDL-720p
+          - WEBRip-720p
+      - name: Bluray-720p
+      - name: HDTV-720p

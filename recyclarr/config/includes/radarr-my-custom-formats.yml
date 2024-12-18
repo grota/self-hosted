@@ -62,7 +62,6 @@ custom_formats:
       - name: 'Spanish 1080p or 720p'
         score: 0
 
-
   - trash_ids:
       - d6e9318c875905d6cfb5bee961afcea9 # Language: Not Original
     assign_scores_to:
