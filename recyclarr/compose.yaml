@@ -11,7 +11,8 @@ services:
     volumes:
       - ./config:/config
     environment:
-      - TZ=Europe/Madrid
+      TZ: Europe/Madrid
+      CRON_SCHEDULE: "1 */72 * * *"
     extends:
       file: ../compose-snippets/logging-limits.yaml
       service: logging

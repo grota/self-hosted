@@ -40,7 +40,7 @@ services:
       # - /mnt/disk/.beszel:/extra-filesystems/sda1:ro
     environment:
       PORT: 45876
-      KEY: "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIMW3bWq06dvHpEYptDnT+gT67MgZPWc07PB/NhCA0S6u"
+      KEY:
     extends:
       file: ../compose-snippets/logging-limits.yaml
       service: logging

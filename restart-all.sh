@@ -7,6 +7,9 @@ for dir in */; do
     if [[ "$dir" == "jackett/" ]]; then
         continue
     fi
+    if [[ "$dir" == "recyclarr/" ]]; then
+        continue
+    fi
 
     echo "Entering directory: $dir"
     cd "$dir" || { echo "Failed to enter $dir"; continue; }
