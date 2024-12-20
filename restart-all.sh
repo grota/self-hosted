@@ -4,6 +4,9 @@ for dir in */; do
     if [[ "$dir" == "compose-snippets/" ]]; then
         continue
     fi
+    if [[ "$dir" == "jackett/" ]]; then
+        continue
+    fi
 
     echo "Entering directory: $dir"
     cd "$dir" || { echo "Failed to enter $dir"; continue; }

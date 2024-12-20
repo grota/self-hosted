@@ -26,6 +26,7 @@ services:
       - homepage.icon=sh-windmill
       - homepage.description=developer platform and workflow engine
       - homepage.weight=10
+      - diun.enable=false
 
   windmill_worker:
     image: ${WM_IMAGE}

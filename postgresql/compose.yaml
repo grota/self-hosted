@@ -23,5 +23,8 @@ services:
     networks:
       - network-postgres
 
+    labels:
+      - diun.enable=true
+
 include:
   - ../compose-snippets/network-postgres.yaml

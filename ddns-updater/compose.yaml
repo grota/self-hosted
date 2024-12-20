@@ -24,6 +24,7 @@ services:
       - homepage.href=//ddns.home.lab
       - homepage.icon=sh-ddns-updater
       - homepage.weight=-10
+      - diun.enable=true
 # {
 #     "settings": [
 #         {

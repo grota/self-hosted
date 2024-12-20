@@ -28,3 +28,4 @@ services:
       - homepage.widget.url=http://reverse-proxy.home.lab
       - homepage.widget.username=$USERNAME_FOR_WIDGET
       - homepage.widget.password=$PASSWORD_FOR_WIDGET
+      - diun.enable=true

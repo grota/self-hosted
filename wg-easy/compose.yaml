@@ -36,3 +36,4 @@ services:
       - homepage.icon=sh-wireguard
       - homepage.description=Wireguard
       - homepage.weight=20
+      - diun.enable=true

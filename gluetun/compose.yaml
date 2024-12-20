@@ -43,6 +43,7 @@ services:
       - homepage.weight=20
       - homepage.widget.type=gluetun
       - homepage.widget.url=http://gluetun-control-server.home.lab
+      - diun.enable=true
 
     extends:
       file: ../compose-snippets/logging-limits.yaml

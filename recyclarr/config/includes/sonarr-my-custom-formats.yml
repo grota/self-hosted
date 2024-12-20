@@ -40,18 +40,26 @@ custom_formats:
       - d0c516558625b04b363fa6c5c2c7cfd4 # WEB Scene
     assign_scores_to:
       - name: WEB-1080p
-      - name: 'Original-Lang 1080p'
-      - name: 'Original-Lang 720p'
+      - name: 'Lang-en-orig 1080p'
+      - name: 'Lang-en-orig 720p'
       - name: 'Italian 1080p or 720p'
       - name: 'Spanish 1080p or 720p'
 
   - trash_ids:
-      - ae575f95ab639ba5d15f663bf019e3e8 # Language: Not Original
+      - '77777777777777777777777777777777' # Language: Not EN and Not Original
     assign_scores_to:
-      - name: 'Original-Lang 1080p'
+      - name: 'Lang-en-orig 1080p'
         score: -10000
-      - name: 'Original-Lang 720p'
+      - name: 'Lang-en-orig 720p'
         score: -10000
+
+  - trash_ids:
+      - '66666666666666666666666666666666' # Language: English
+    assign_scores_to:
+      - name: 'Lang-en-orig 1080p'
+        score: 10
+      - name: 'Lang-en-orig 720p'
+        score: 10
 
   - trash_ids:
     - '33333333333333333333333333333333' # "Language: Not Italian"

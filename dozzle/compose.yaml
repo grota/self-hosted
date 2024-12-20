@@ -20,6 +20,7 @@ services:
       - homepage.icon=sh-dozzle
       - homepage.description=Real-time logging and monitoring for Docker
       - homepage.weight=25
+      - diun.enable=true
 
 include:
   - ../compose-snippets/network-for-nginx-proxy.yaml

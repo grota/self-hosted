@@ -14,6 +14,9 @@ services:
       - ./assets:/app/public/custom_assets
       - /var/run/docker.sock:/var/run/docker.sock
 
+    labels:
+      - diun.enable=true
+
     restart: unless-stopped
     extends:
       file: ../compose-snippets/logging-limits.yaml

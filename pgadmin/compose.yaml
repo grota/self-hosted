@@ -28,6 +28,7 @@ services:
       - homepage.icon=sh-postgresql
       - homepage.description=PostgreSQL web administration.
       - homepage.weight=20
+      - diun.enable=true
 
 include:
   - ../compose-snippets/network-for-nginx-proxy.yaml

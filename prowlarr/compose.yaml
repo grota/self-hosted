@@ -24,6 +24,7 @@ services:
       - homepage.widget.type=prowlarr
       - homepage.widget.url=http://prowlarr.home.lab
       - homepage.widget.key=$KEY_FOR_WIDGET
+      - diun.enable=true
 
 include:
   - ../compose-snippets/network-for-nginx-proxy.yaml

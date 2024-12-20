@@ -11,6 +11,8 @@ services:
     extends:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
+    labels:
+      - diun.enable=true
 
     # ports:
     #   - "${PORT:-8191}:8191"

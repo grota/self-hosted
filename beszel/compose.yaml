@@ -27,6 +27,7 @@ services:
       - homepage.widget.username=$USERNAME_FOR_WIDGET
       - homepage.widget.password=$PASSWORD_FOR_WIDGET
       - homepage.widget.systemId=kx16aow6okh3by2
+      - diun.enable=true
 
   beszel-agent:
     image: "henrygd/beszel-agent"

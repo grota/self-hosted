@@ -24,6 +24,7 @@ services:
       - homepage.icon=sh-stirling-pdf
       - homepage.description=PDF tools
       - homepage.weight=80
+      - diun.enable=true
 
 include:
   - ../compose-snippets/network-for-nginx-proxy.yaml

@@ -30,6 +30,7 @@ services:
       - homepage.widget.url=http://sonarr.home.lab
       - homepage.widget.key=$KEY_FOR_WIDGET
       - homepage.widget.enableQueue=true
+      - diun.enable=true
 
 include:
   - ../compose-snippets/volume-usbdisk-on-raspberry-pi.yaml
