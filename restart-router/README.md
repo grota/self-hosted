@@ -10,6 +10,10 @@ ROUTER_WEB_USERNAME=xxx
 ROUTER_WEB_PASSWORD=xxx
 ```
 
+```
+cd src && npm ci
+```
+
 # Development
 
 ```
