@@ -1,0 +1,17 @@
+services:
+  playwright:
+    image: ghcr.io/grota/playwright-with-x11vnc:v1.49.1-v1
+    volumes:
+      - ./src:/app
+    working_dir: /app
+    ports:
+      - 5900:5900 # vnc server port.
+    command: /app/ping_and_reset.sh
+    restart: unless-stopped
+
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "2"
+        max-size: "10m"
+        mode: non-blocking
