@@ -1,0 +1,71 @@
+services:
+  broker:
+    image: docker.io/library/redis:7
+    restart: unless-stopped
+    container_name: redis-paperless-ngx
+    volumes:
+      - ./redisdata:/data
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+
+  paperless-ngx:
+    image: ghcr.io/paperless-ngx/paperless-ngx:latest
+    restart: unless-stopped
+    container_name: paperless-ngx
+    depends_on:
+      - broker
+    # ports:
+    #   - "8000:8000"
+    volumes:
+      - ./data:/usr/src/paperless/data
+      - ./media:/usr/src/paperless/media
+      - ./export:/usr/src/paperless/export
+      - ./consume:/usr/src/paperless/consume
+    env_file: docker-compose.env
+    environment:
+      PAPERLESS_REDIS: redis://broker:6379
+      PAPERLESS_DBHOST: postgres
+    networks:
+      - default
+      - network-postgres
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+
+    labels:
+      - homepage.group=Apps
+      - homepage.name=Paperless-ngx
+      - homepage.href=//paperless.home.lab
+      - homepage.icon=sh-paperless-ngx
+      - homepage.description=scan, index and archive your physical documents
+      - homepage.weight=40
+      - diun.enable=true
+      - homepage.widget.type=paperlessngx
+      - homepage.widget.url=http://paperless.home.lab
+      - homepage.widget.key=$PAPERLESS_NGX_TOKEN
+
+  paperless-ai:
+    image: clusterzx/paperless-ai
+    container_name: paperless-ai
+    volumes:
+      - ./paperless-ai_data:/app/data
+    # ports:
+    #   - "3000:3000"
+    restart: unless-stopped
+    networks:
+      - default
+      - network-postgres
+
+    labels:
+      - homepage.group=Apps
+      - homepage.name=Paperless-ai
+      - homepage.href=//paperless-ai.home.lab
+      - homepage.icon=sh-pdfding
+      - homepage.description=ai plugin for paperless-ngx
+      - homepage.weight=42
+      - diun.enable=true
+
+include:
+  - ../compose-snippets/network-postgres.yaml
+  - ../compose-snippets/network-for-nginx-proxy.yaml

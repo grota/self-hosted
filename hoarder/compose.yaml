@@ -5,6 +5,7 @@ services:
   hoarder:
     image: ghcr.io/hoarder-app/hoarder:${HOARDER_VERSION:-release}
     restart: unless-stopped
+    container_name: hoarder
     volumes:
       - ./data:/data
     # ports:
@@ -30,6 +31,7 @@ services:
   chrome:
     image: gcr.io/zenika-hub/alpine-chrome:123
     restart: unless-stopped
+    container_name: hoarder-chrome
     command:
       - --no-sandbox
       - --disable-gpu
@@ -44,6 +46,7 @@ services:
   meilisearch:
     image: getmeili/meilisearch:v1.11.1
     restart: unless-stopped
+    container_name: hoarder-meilisearch
     env_file:
       - .env
     environment:
