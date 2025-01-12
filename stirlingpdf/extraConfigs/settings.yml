@@ -102,7 +102,7 @@ metrics:
 AutomaticallyGenerated:
   key: b2c65aac-c7a5-4052-8f53-7adcd0806d95
   UUID: 9cc0a600-3171-445f-b577-410b6bb731c2
-  appVersion: 0.36.5
+  appVersion: 0.36.6
 
 processExecutor:
   sessionLimit: # Process executor instances limits

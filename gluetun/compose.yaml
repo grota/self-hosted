@@ -16,7 +16,7 @@ services:
     #   - 6881:6881     # qbittorrent tcp and udp connection ports https://hub.docker.com/r/linuxserver/qbittorrent
     #   - 6881:6881/udp # qbittorrent tcp and udp connection ports https://hub.docker.com/r/linuxserver/qbittorrent
       # - 9696:9696     # prowlarr web ui port
-      # - 8191:8191     # flaresolverr port, unused atm.
+      - 8191:8191     # flaresolverr
 
     volumes:
       - ./config:/gluetun

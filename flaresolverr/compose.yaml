@@ -13,9 +13,12 @@ services:
       service: logging
     labels:
       - diun.enable=true
+    # volumes:
+    #   - ./flaresolverr_service.py:/app/flaresolverr_service.py
 
     # ports:
     #   - "${PORT:-8191}:8191"
 
-include:
-  - ../compose-snippets/network-for-nginx-proxy.yaml
+    network_mode: "container:gluetun"
+# include:
+#   - ../compose-snippets/network-for-nginx-proxy.yaml

@@ -1,0 +1,3 @@
+docker compose --project-directory flaresolverr down -v
+docker compose --project-directory qbittorrent down -v
+docker compose --project-directory gluetun down -v
