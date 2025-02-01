@@ -1,0 +1,25 @@
+services:
+  openwebui:
+    image: ghcr.io/open-webui/open-webui:main
+    # ports:
+    #   - "3000:8080"
+    volumes:
+      - ./data:/app/backend/data
+    container_name: openwebui
+    restart: unless-stopped
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+    extra_hosts:
+      - 'host.docker.internal:host-gateway'
+    labels:
+      - homepage.group=Apps
+      - homepage.name=openwebui
+      - homepage.href=//chat.home.lab
+      - homepage.icon=open-webui
+      - homepage.description=Chat with LLMs
+      - homepage.weight=5
+      - diun.enable=true
+
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml
