@@ -42,5 +42,6 @@ while true; do
         done
         echo "All retries failed, restarting router"
         npx playwright test --project=firefox --quiet --reporter=list reboot-router
+        safe_sleep 1200
     fi
 done
