@@ -32,6 +32,7 @@ services:
     image: ${WM_IMAGE}
     container_name: windmill_worker_1
     # pull_policy: always
+    restart: unless-stopped
     environment:
       DATABASE_URL:
       MODE: worker
@@ -51,7 +52,8 @@ services:
 
   windmill_worker_native:
     image: ${WM_IMAGE}
-    pull_policy: always
+    # pull_policy: always
+    restart: unless-stopped
     container_name: windmill_worker_native_1
     environment:
       DATABASE_URL:
@@ -71,7 +73,8 @@ services:
   windmill_lsp:
     image: ghcr.io/windmill-labs/windmill-lsp:latest
     container_name: windmill_lsp
-    pull_policy: always
+    # pull_policy: always
+    restart: unless-stopped
     # expose:
     #   - 3001
     volumes:
