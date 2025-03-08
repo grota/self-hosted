@@ -32,7 +32,8 @@ while true; do
         echo "Ping successful, sleeping for 10 minutes"
         safe_sleep 600
     else
-        for interval in 20 60 120; do
+        # 2, 5, 10 minutes
+        for interval in 120 300 600; do
             echo "Ping failed, sleeping $interval seconds and trying again."
             safe_sleep $interval
             if ping_with_retry; then
@@ -42,6 +43,7 @@ while true; do
         done
         echo "All retries failed, restarting router"
         npx playwright test --project=firefox --quiet --reporter=list reboot-router
+        # 20 minutes
         safe_sleep 1200
     fi
 done
