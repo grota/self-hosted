@@ -8,6 +8,8 @@ services:
 
     # ports:
     #   - 3000:3000
+    environment:
+      HOMEPAGE_ALLOWED_HOSTS: home.lab
 
     volumes:
       - ./config:/app/config

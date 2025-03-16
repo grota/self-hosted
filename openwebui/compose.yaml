@@ -21,5 +21,19 @@ services:
       - homepage.weight=5
       - diun.enable=true
 
+  pipelines:
+    image: ghcr.io/open-webui/pipelines:main
+    # ports:
+    #   - "9099:9099"
+    volumes:
+      - ./data:/app/pipelines
+    container_name: pipelines
+    restart: unless-stopped
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+    labels:
+      - diun.enable=true
+
 include:
   - ../compose-snippets/network-for-nginx-proxy.yaml
