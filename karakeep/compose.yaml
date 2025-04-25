@@ -2,10 +2,10 @@ include:
   - ../compose-snippets/network-for-nginx-proxy.yaml
 
 services:
-  hoarder:
-    image: ghcr.io/hoarder-app/hoarder:${HOARDER_VERSION:-release}
+  karakeep:
+    image: ghcr.io/karakeep-app/karakeep:${KARAKEEP_VERSION:-release}
     restart: unless-stopped
-    container_name: hoarder
+    container_name: karakeep
     volumes:
       - ./data:/data
     # ports:
@@ -15,23 +15,23 @@ services:
     environment:
       MEILI_ADDR: http://meilisearch:7700
       BROWSER_WEB_URL: http://chrome:9222
-      # OPENAI_API_KEY: ...
+      OPENAI_API_KEY: ${OPENAI_API_KEY}
       DATA_DIR: /data
     extends:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
     labels:
       - homepage.group=Apps
-      - homepage.name=hoarder
-      - homepage.href=//hoarder.home.lab
-      - homepage.icon=sh-hoarder
+      - homepage.name=karakeep
+      - homepage.href=${NEXTAUTH_URL}
+      - homepage.icon=sh-karakeep
       - homepage.description=Bookmark everything
       - homepage.weight=0
 
   chrome:
     image: gcr.io/zenika-hub/alpine-chrome:123
     restart: unless-stopped
-    container_name: hoarder-chrome
+    container_name: karakeep-chrome
     command:
       - --no-sandbox
       - --disable-gpu
@@ -46,7 +46,7 @@ services:
   meilisearch:
     image: getmeili/meilisearch:v1.11.1
     restart: unless-stopped
-    container_name: hoarder-meilisearch
+    container_name: karakeep-meilisearch
     env_file:
       - .env
     environment:
