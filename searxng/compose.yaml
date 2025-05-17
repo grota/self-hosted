@@ -1,0 +1,52 @@
+# https://github.com/searxng/searxng-docker
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml
+
+services:
+  redis-searxng:
+    container_name: redis-searxng
+    image: docker.io/valkey/valkey:8-alpine
+    command: valkey-server --save 30 1 --loglevel warning
+    restart: unless-stopped
+    volumes:
+      - ./valkey-data:/data
+    cap_drop:
+      - ALL
+    cap_add:
+      - SETGID
+      - SETUID
+      - DAC_OVERRIDE
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+
+  searxng:
+    container_name: searxng
+    image: docker.io/searxng/searxng:latest
+    restart: unless-stopped
+    # ports:
+    #   - "127.0.0.1:8080:8080"
+    volumes:
+      - ./searxng:/etc/searxng:rw
+    environment:
+      - SEARXNG_BASE_URL=https://${SEARXNG_HOSTNAME:-localhost}/
+      - UWSGI_WORKERS=${SEARXNG_UWSGI_WORKERS:-2}
+      - UWSGI_THREADS=${SEARXNG_UWSGI_THREADS:-2}
+    cap_drop:
+      - ALL
+    cap_add:
+      - CHOWN
+      - SETGID
+      - SETUID
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+
+    labels:
+      - homepage.group=System
+      - homepage.name=Searxng
+      - homepage.href=//searxng.home.lab
+      - homepage.icon=searxng
+      - homepage.description=meta search engine
+      - homepage.weight=20
+      - diun.enable=true
