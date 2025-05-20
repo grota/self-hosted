@@ -9,3 +9,8 @@ ui:
   static_use_hash: true
 redis:
   url: redis://redis-searxng:6379/0
+
+search:
+  formats:
+    - html
+    - json

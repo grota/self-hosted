@@ -1,0 +1,23 @@
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml
+
+services:
+  crawl4ai:
+    image: unclecode/crawl4ai:latest
+    container_name: crawl4ai
+    restart: unless-stopped
+    # ports:
+    #   - 11235:11235
+    shm_size: 1gb
+    environment:
+      OPENAI_API_KEY:
+      ANTHROPIC_API_KEY:
+      GEMINI_API_TOKEN: "$GEMINI_API_KEY"
+    labels:
+      - homepage.group=System
+      - homepage.name=Crawl4AI
+      - homepage.href=//crawl4ai.home.lab
+      - homepage.icon=https://docs.crawl4ai.com/img/favicon-32x32.png
+      - homepage.description=Crawling service
+      - homepage.weight=70
+      - diun.enable=true
