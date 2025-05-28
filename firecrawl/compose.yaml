@@ -19,8 +19,8 @@ x-common-service: &common-service
     - "host.docker.internal:host-gateway"
 
 x-common-env: &common-env
-  REDIS_URL: ${REDIS_URL:-redis://redis:6379}
-  REDIS_RATE_LIMIT_URL: ${REDIS_URL:-redis://redis:6379}
+  REDIS_URL: ${REDIS_URL:-redis://firecrawl-redis:6379}
+  REDIS_RATE_LIMIT_URL: ${REDIS_URL:-redis://firecrawl-redis:6379}
   PLAYWRIGHT_MICROSERVICE_URL: ${PLAYWRIGHT_MICROSERVICE_URL:-http://playwright-service:3000/scrape}
   USE_DB_AUTHENTICATION: ${USE_DB_AUTHENTICATION:-}
   OPENAI_API_KEY: ${OPENAI_API_KEY:-}
@@ -73,7 +73,7 @@ services:
       PORT: ${INTERNAL_PORT:-3002}
       FLY_PROCESS_GROUP: app
     depends_on:
-      - redis
+      - firecrawl-redis
       - playwright-service
     # ports:
     #   - "${PORT:-3002}:${INTERNAL_PORT:-3002}"
@@ -90,7 +90,7 @@ services:
       <<: *common-env
       FLY_PROCESS_GROUP: worker
     depends_on:
-      - redis
+      - firecrawl-redis
       - playwright-service
       - api
     command: [ "pnpm", "run", "workers" ]
@@ -100,7 +100,7 @@ services:
     restart: unless-stopped
     container_name: firecrawl-worker
 
-  redis:
+  firecrawl-redis:
     # NOTE: If you want to use Valkey (open source) instead of Redis (source available),
     # uncomment the Valkey statement and comment out the Redis statement.
     # Using Valkey with Firecrawl is untested and not guaranteed to work. Use with caution.
@@ -109,7 +109,8 @@ services:
 
     # networks:
     #   - backend
-    command: redis-server --bind 0.0.0.0
+    # command: redis-server --bind 0.0.0.0
+    # command: redis-server --bind 0.0.0.0
     extends:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
