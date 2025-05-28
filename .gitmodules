@@ -1,0 +1,3 @@
+[submodule "firecrawl/upstream"]
+	path = firecrawl/upstream
+	url = git@github.com:mendableai/firecrawl.git
