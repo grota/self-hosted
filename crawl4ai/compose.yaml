@@ -13,6 +13,8 @@ services:
       OPENAI_API_KEY:
       ANTHROPIC_API_KEY:
       GEMINI_API_TOKEN: "$GEMINI_API_KEY"
+    volumes:
+      - /dev/shm:/dev/shm  # Chromium performance
     labels:
       - homepage.group=System
       - homepage.name=Crawl4AI
