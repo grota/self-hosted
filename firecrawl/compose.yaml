@@ -21,7 +21,7 @@ x-common-service: &common-service
 x-common-env: &common-env
   REDIS_URL: ${REDIS_URL:-redis://firecrawl-redis:6379}
   REDIS_RATE_LIMIT_URL: ${REDIS_URL:-redis://firecrawl-redis:6379}
-  PLAYWRIGHT_MICROSERVICE_URL: ${PLAYWRIGHT_MICROSERVICE_URL:-http://playwright-service:3000/scrape}
+  PLAYWRIGHT_MICROSERVICE_URL: ${PLAYWRIGHT_MICROSERVICE_URL:-http://firecrawl-playwright:3000/scrape}
   USE_DB_AUTHENTICATION: ${USE_DB_AUTHENTICATION:-}
   OPENAI_API_KEY: ${OPENAI_API_KEY:-}
   OPENAI_BASE_URL: ${OPENAI_BASE_URL:-}
@@ -48,7 +48,7 @@ x-common-env: &common-env
   SEARXNG_CATEGORIES: ${SEARXNG_CATEGORIES:-}
 
 services:
-  playwright-service:
+  firecrawl-playwright:
     build: ./upstream/apps/playwright-service-ts
     environment:
       PORT: 3000
@@ -64,12 +64,11 @@ services:
       file: ../compose-snippets/logging-limits.yaml
       service: logging
 
-  api:
+  firecrawl-api:
     <<: *common-service
     environment:
       <<: *common-env
-      HOST: "localhost"
-      # HOST: "0.0.0.0"
+      HOST: "0.0.0.0"
       PORT: ${INTERNAL_PORT:-3002}
       FLY_PROCESS_GROUP: app
     depends_on:
@@ -84,7 +83,7 @@ services:
     restart: unless-stopped
     container_name: firecrawl-api
 
-  worker:
+  firecrawl-worker:
     <<: *common-service
     environment:
       <<: *common-env
