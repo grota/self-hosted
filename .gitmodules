@@ -1,3 +1,6 @@
 [submodule "firecrawl/upstream"]
 	path = firecrawl/upstream
 	url = git@github.com:mendableai/firecrawl.git
+[submodule "ivo-toby-mcp-openapi-server/upstream"]
+	path = ivo-toby-mcp-openapi-server/upstream
+	url = git@github.com:ivo-toby/mcp-openapi-server.git

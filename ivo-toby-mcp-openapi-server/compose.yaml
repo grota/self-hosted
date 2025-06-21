@@ -1,0 +1,21 @@
+# https://github.com/ivo-toby/mcp-openapi-server
+services:
+  ivo-toby-mcp-openapi-server:
+    image: ivo-toby-mcp-openapi-server
+    build:
+      context: ./upstream/
+    entrypoint: node /app/bin/mcp-server.js --headers "X-API-KEY:$FINANCIAL_DATASETS_API_KEY" --openapi-spec https://raw.githubusercontent.com/virattt/fd-docs/refs/heads/main/api-reference/openapi.json
+    environment:
+      API_BASE_URL: 'https://api.financialdatasets.ai'
+      OPENAPI_SPEC_FROM_STDIN: false
+      TRANSPORT_TYPE: http
+      SERVER_NAME: financialdatasets
+      HTTP_HOST: 0.0.0.0
+    container_name: ivo-toby-mcp-openapi-server
+    restart: unless-stopped
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml
