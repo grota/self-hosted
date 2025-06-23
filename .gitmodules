@@ -4,6 +4,6 @@
 [submodule "ivo-toby-mcp-openapi-server/upstream"]
 	path = ivo-toby-mcp-openapi-server/upstream
 	url = git@github.com:ivo-toby/mcp-openapi-server.git
-[submodule "gpt-researcher"]
-	path = gpt-researcher
+[submodule "gpt-researcher/upstream"]
+	path = gpt-researcher/upstream
 	url = git@github.com:assafelovic/gpt-researcher.git

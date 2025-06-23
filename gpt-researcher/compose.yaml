@@ -1,0 +1,40 @@
+services:
+  gpt-researcher:
+    extends:
+      file: ./upstream/docker-compose.yml
+      service: gpt-researcher
+    build:
+      context: ./upstream/
+    ports: !reset []
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "2"
+        max-size: "10m"
+        mode: non-blocking
+
+  gptr-nextjs:
+    extends:
+      file: ./upstream/docker-compose.yml
+      service: gptr-nextjs
+    build:
+      context: ./upstream/frontend/nextjs
+    ports: !reset []
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-file: "2"
+        max-size: "10m"
+        mode: non-blocking
+    labels:
+      - homepage.group=Apps
+      - homepage.name=GPT-Researcher
+      - homepage.href=http://gpt-researcher.home.lab
+      - homepage.icon=http://gpt-researcher.home.lab/img/gptr-logo.png
+      - homepage.description=Opensource DeepResearch
+      - homepage.weight=0
+
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml
