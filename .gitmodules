@@ -7,3 +7,6 @@
 [submodule "gpt-researcher/upstream"]
 	path = gpt-researcher/upstream
 	url = git@github.com:assafelovic/gpt-researcher.git
+[submodule "plugged-in/pluggedin-app"]
+	path = plugged-in/pluggedin-app
+	url = git@github.com:VeriTeknik/pluggedin-app.git
