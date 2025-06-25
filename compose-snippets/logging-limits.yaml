@@ -1,8 +1,11 @@
+x-logging-limits: &x-logging-limits
+  logging:
+    driver: "json-file"
+    options:
+      max-file: "2"
+      max-size: "10m"
+      mode: non-blocking
+
 services:
   logging:
-    logging:
-      driver: "json-file"
-      options:
-        max-file: "2"
-        max-size: "10m"
-        mode: non-blocking
+    <<: *x-logging-limits
