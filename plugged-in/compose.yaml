@@ -1,0 +1,42 @@
+# https://github.com/VeriTeknik/pluggedin-app
+
+x-logging-limits: &x-logging-limits
+  logging:
+    driver: "json-file"
+    options:
+      max-file: "2"
+      max-size: "10m"
+      mode: non-blocking
+
+services:
+  metatool-web:
+    restart: unless-stopped
+    extends:
+      file: ./pluggedin-app/docker-compose.yml
+      service: metatool-web
+    # build: !reset {}
+    # image: ghcr.io/veriteknik/pluggedin-app:v2.2.0
+    ports: !reset []
+      # - '12005:3000'
+    <<: *x-logging-limits
+
+  metatool-postgres:
+    extends:
+      file: ./pluggedin-app/docker-compose.yml
+      service: metatool-postgres
+    restart: unless-stopped
+    ports: !reset []
+      # - '8432:5432'
+    volumes: !override
+      - ./metatool-postgres:/var/lib/postgresql/data
+    <<: *x-logging-limits
+
+  drizzle-migrate:
+    extends:
+      file: ./pluggedin-app/docker-compose.yml
+      service: drizzle-migrate
+    # build: !reset {}
+    # image: ghcr.io/veriteknik/pluggedin-app:v2.2.0
+
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml
