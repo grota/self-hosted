@@ -72,3 +72,12 @@ custom_formats:
     assign_scores_to:
       - name: 'Spanish 1080p or 720p'
         score: -10000
+
+  - trash_ids:
+    - '1b3994c551cbb92a2c781af061f4ab44' # "scene.json"
+    assign_scores_to:
+      - name: WEB-1080p
+      - name: 'Lang-en-orig 1080p'
+      - name: 'Lang-en-orig 720p'
+      - name: 'Italian 1080p or 720p'
+      - name: 'Spanish 1080p or 720p'
