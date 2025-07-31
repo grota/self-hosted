@@ -11,6 +11,8 @@ services:
       PLAYWRIGHT_DRIVER_URL: ws://browser-sockpuppet-chrome:3000
       FETCH_WORKERS: 4
       TZ: Europe/Madrid
+      BASE_URL: $BASE_URL
+      USE_X_SETTINGS: 1
     # ports:
     #   - 127.0.0.1:5000:5000
     depends_on:
@@ -26,12 +28,12 @@ services:
     labels:
       - homepage.group=Apps
       - homepage.name=Changedetection
-      - homepage.href=//changedetection.home.lab
+      - homepage.href=$BASE_URL
       - homepage.icon=changedetection
       - homepage.description=Detect website changes with alerts.
       - homepage.weight=10
       - homepage.widget.type=changedetectionio
-      - homepage.widget.url=http://changedetection.home.lab
+      - homepage.widget.url=$BASE_URL
       - homepage.widget.key=$CHANGEDETECTION_API_KEY
       - diun.enable=true
 
