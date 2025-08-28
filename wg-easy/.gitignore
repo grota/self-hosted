@@ -1,2 +1,3 @@
 /etc_wireguard
 /.env
+/backup

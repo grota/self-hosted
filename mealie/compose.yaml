@@ -1,0 +1,42 @@
+services:
+  mealie:
+    image: ghcr.io/mealie-recipes/mealie:v3.1.2
+    container_name: mealie
+    restart: unless-stopped
+    # ports:
+    #   - "9925:9000"
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+    volumes:
+      - ./mealie-data:/app/data/
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+    environment:
+      ALLOW_SIGNUP: "false"
+      PUID: 1000
+      PGID: 1000
+      TZ: Europe/Madrid
+      BASE_URL: "http:$BASE_URL"
+      OPENAI_API_KEY:
+
+      SMTP_HOST:
+      SMTP_PORT:
+      SMTP_FROM_NAME:
+      SMTP_AUTH_STRATEGY:
+      SMTP_FROM_EMAIL:
+      SMTP_USER:
+      SMTP_PASSWORD:
+    labels:
+      - homepage.group=Apps
+      - homepage.name=Mealie
+      - homepage.href=$BASE_URL
+      - homepage.icon=sh-mealie
+      - homepage.description=Recipes (mealie)
+      - homepage.weight=25
+      - diun.enable=true
+
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml
