@@ -1,0 +1,37 @@
+services:
+  social-to-mealie:
+    image: ghcr.io/gerardpollorebozado/social-to-mealie:latest
+    container_name: social-to-mealie
+    restart: unless-stopped
+    environment:
+      OPENAI_URL: https://api.openai.com/v1
+      OPENAI_API_KEY:
+      WHISPER_MODEL: whisper-1
+      MEALIE_URL: http://mealie.home.lab
+      MEALIE_API_KEY:
+      # Optional, customize the standard prompt if needed this will replace it
+      # - USER_PROMPT=Custom prompt
+      # Optional, addition to the prompt, useful for translation needs
+      EXTRA_PROMPT: "The description, ingredients, and instructions must be provided in Spanish"
+    # ports:
+    #   - 4000:3000
+    security_opt:
+      - no-new-privileges:true
+    deploy:
+      resources:
+        limits:
+          memory: 1000M
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+    labels:
+      - homepage.group=Apps
+      - homepage.name=Mealie
+      - homepage.href=//social-to-mealie.home.lab
+      - homepage.icon=sh-mealie
+      - homepage.description="From insta/YT/FB/TT/Pinterest to mealie"
+      - homepage.weight=95
+      - diun.enable=true
+
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml
