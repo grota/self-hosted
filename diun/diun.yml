@@ -1,0 +1,7 @@
+notif:
+  webhook:
+    endpoint: http://diun-dash.home.lab/webhook
+    method: POST
+    headers:
+      content-type: application/json
+    timeout: 10s

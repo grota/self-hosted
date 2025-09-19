@@ -7,3 +7,6 @@
 [submodule "gpt-researcher/upstream"]
 	path = gpt-researcher/upstream
 	url = git@github.com:assafelovic/gpt-researcher.git
+[submodule "diun-dash/upstream"]
+	path = diun-dash/upstream
+	url = git@github.com:orkaa/diun-dash.git

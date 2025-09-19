@@ -1,0 +1,25 @@
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml
+
+services:
+  diun-dash:
+    build:
+      context: ./upstream/
+    container_name: diun-dash
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+    # ports:
+    #   - "8554:8554"
+    volumes:
+      - ${DATA_PATH:-./data}:/app/data
+    env_file:
+      - .env
+    restart: unless-stopped
+    labels:
+      - diun.enable=true
+      - homepage.group=System
+      - homepage.name=Diun Dashboard
+      - homepage.href=http://diun-dash.home.lab
+      - homepage.description=Diun Dashboard
+      - homepage.weight=45

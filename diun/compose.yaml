@@ -5,6 +5,7 @@ services:
     command: serve
     volumes:
       - "./data:/data"
+      - "./diun.yml:/diun.yml:ro"
       - "/var/run/docker.sock:/var/run/docker.sock"
     hostname: diun
     environment:
@@ -19,6 +20,7 @@ services:
       - DIUN_NOTIF_TELEGRAM_CHATIDS=$DIUN_NOTIF_TELEGRAM_CHATIDS
       # - DIUN_PROVIDERS_DOCKER_WATCHBYDEFAULT=true
       - 'DIUN_NOTIF_TELEGRAM_TEMPLATEBODY={{ if (eq .Entry.Status "new") }}New{{ else }}Updated{{ end }} tag for {{ if .Entry.Image.HubLink }}[{{ .Entry.Image.Path }}]({{ .Entry.Image.HubLink }}){{ else }}{{ .Entry.Image.Tag }}{{ end }}.'
+      - DIUN_NOTIF_WEBHOOK_HEADERS_AUTHORIZATION=$DIUN_DASH_AUTH
 
     labels:
       - diun.enable=true
