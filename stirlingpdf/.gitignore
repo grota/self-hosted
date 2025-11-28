@@ -1,3 +1,5 @@
 /logs
-/extraConfigs/db/backup/
+/extraConfigs/backup/
 /extraConfigs/stirling-pdf-DB-2.3.232.mv.db
+/customFiles
+/pipeline
