@@ -1,4 +1,0 @@
-/.env
-/langfuse_clickhouse_data
-/langfuse_clickhouse_logs
-/langfuse_minio_data
