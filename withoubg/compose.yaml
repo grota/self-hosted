@@ -1,0 +1,18 @@
+services:
+  withoutbg:
+    image: withoutbg/app:latest
+    container_name: withoutbg
+    restart: unless-stopped
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+    labels:
+      - homepage.group=Apps
+      - homepage.name=Withoutbg
+      - homepage.href=//withoutbg.home.lab
+      - homepage.icon=sh-mediamanager
+      - homepage.weight=99
+      - diun.enable=true
+
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml

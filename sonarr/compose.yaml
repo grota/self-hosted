@@ -25,7 +25,7 @@ services:
       - homepage.href=//sonarr.home.lab
       - homepage.icon=sh-sonarr
       - homepage.description=TV organizer/manager
-      - homepage.weight=20
+      - homepage.weight=15
       - homepage.widget.type=sonarr
       - homepage.widget.url=http://sonarr.home.lab
       - homepage.widget.key=$KEY_FOR_WIDGET

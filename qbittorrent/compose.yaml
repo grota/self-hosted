@@ -34,7 +34,7 @@ services:
       - homepage.href=//qbt.home.lab
       - homepage.icon=sh-qbittorrent
       - homepage.description=bittorrent client
-      - homepage.weight=50
+      - homepage.weight=20
       - homepage.widget.type=qbittorrent
       - homepage.widget.url=http://qbt.home.lab
       - homepage.widget.username=$USERNAME_FOR_WIDGET
