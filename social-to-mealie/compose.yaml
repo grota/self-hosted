@@ -7,7 +7,7 @@ services:
       OPENAI_URL: https://api.openai.com/v1
       OPENAI_API_KEY:
       TRANSCRIPTION_MODEL: whisper-1
-      TEXT_MODEL: gpt-4o
+      TEXT_MODEL: gpt-5-mini
       MEALIE_URL: http://mealie.home.lab
       MEALIE_API_KEY:
       # Optional, customize the standard prompt if needed this will replace it
