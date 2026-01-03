@@ -12,7 +12,7 @@ services:
       - ./data:/app/data
       - /home/grota/selfhost:/app/data/projects
     environment:
-      APP_URL: http://arcane.home.lab
+      APP_URL: http://${APP_URL}
       PUID: 1000
       PGID: 1000
       ENCRYPTION_KEY:
@@ -24,7 +24,7 @@ services:
     labels:
       - homepage.group=System
       - homepage.name=arcane
-      - homepage.href=//arcane.home.lab
+      - homepage.href=//${APP_URL}
       - homepage.icon=sh-arcane
       - homepage.description=Docker management
       - homepage.weight=30
