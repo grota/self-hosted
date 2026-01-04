@@ -1,0 +1,52 @@
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml
+
+services:
+  spotify_dashboard_server:
+    image: yooooomi/your_spotify_server
+    restart: unless-stopped
+    container_name: spotify_dashboard_server
+    # ports:
+    #   - "8080:8080"
+    links:
+      - mongo
+    depends_on:
+      - mongo
+    environment:
+      API_ENDPOINT: ${API_BASE_URL}
+      CLIENT_ENDPOINT: ${WEB_BASE_URL}
+      SPOTIFY_PUBLIC:
+      SPOTIFY_SECRET:
+      TIMEZONE:
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+
+  mongo:
+    container_name: spotify_dashboard_mongo
+    restart: unless-stopped
+    image: mongo:6
+    volumes:
+      - ./datadb:/data/db
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+
+  spotify_dashboard_web:
+    image: yooooomi/your_spotify_client
+    restart: unless-stopped
+    # ports:
+    #   - "3000:3000"
+    environment:
+      API_ENDPOINT: ${API_BASE_URL}
+      TIMEZONE:
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+    labels:
+      - homepage.group=Apps
+      - homepage.name=Spotify Dashboard
+      - homepage.href=${WEB_BASE_URL}
+      - homepage.icon=your-spotify
+      - homepage.description=Spotify Dashboard
+      - homepage.weight=90
