@@ -1,0 +1,28 @@
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml
+
+services:
+  dockhand:
+    image: fnsys/dockhand:latest
+    container_name: dockhand
+    restart: unless-stopped
+    group_add:
+      - 966
+    # ports:
+    #   - "3000:3000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ${DATA_DIR}:${DATA_DIR}
+    environment:
+      DATA_DIR:
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+    labels:
+      - homepage.group=System
+      - homepage.name=dockhand
+      - homepage.href=//dockhand.home.lab
+      - homepage.icon=sh-dockhand
+      - homepage.description=Docker management
+      - homepage.weight=30
+

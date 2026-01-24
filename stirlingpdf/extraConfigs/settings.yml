@@ -12,7 +12,6 @@
 
 security:
   enableLogin: false # set to 'true' to enable login
-  csrfDisabled: true # set to 'true' to disable CSRF protection (not recommended for production)
   loginAttemptCount: 5 # lock user account after 5 tries; when using e.g. Fail2Ban you can deactivate the function with -1
   loginResetTimeMinutes: 120 # lock account for 2 hours after x attempts
   loginMethod: all # Accepts values like 'all' and 'normal'(only Login with Username/Password), 'oauth2'(only Login with OAuth2) or 'saml2'(only Login with SAML2)
@@ -59,6 +58,8 @@ security:
     idpCert: classpath:okta.crt # The certificate your Provider will use to authenticate your app's SAML authentication requests. Provided by your Provider
     privateKey: classpath:saml-private-key.key # Your private key. Generated from your keypair
     spCert: classpath:saml-public-cert.crt # Your signing certificate. Generated from your keypair
+  # IMPORTANT: For SAML setup, download your SP metadata from the BACKEND URL: http://localhost:8080/saml2/service-provider-metadata/{registrationId}
+  # Do NOT use the frontend dev server URL (localhost:5173) as it will generate incorrect ACS URLs. Always use the backend URL (localhost:8080) for SAML configuration.
   jwt: # This feature is currently under development and not yet fully supported. Do not use in production.
     persistence: true # Set to 'true' to enable JWT key store
     enableKeyRotation: true # Set to 'true' to enable key pair rotation
@@ -96,6 +97,13 @@ premium:
       enabled: true # Enable audit logging
       level: 2 # Audit logging level: 0=OFF, 1=BASIC, 2=STANDARD, 3=VERBOSE
       retentionDays: 90 # Number of days to retain audit logs
+    databaseNotifications:
+      backups:
+        successful: false # set to 'true' to enable email notifications for successful database backups
+        failed: false # set to 'true' to enable email notifications for failed database backups
+      imports:
+        successful: false # set to 'true' to enable email notifications for successful database imports
+        failed: false # set to 'true' to enable email notifications for failed database imports
 
 mail:
   enabled: false # set to 'true' to enable sending emails
@@ -105,6 +113,35 @@ mail:
   username: '' # SMTP server username
   password: '' # SMTP server password
   from: '' # sender email address
+  startTlsEnable: true # enable STARTTLS (explicit TLS upgrade after connecting) when supported by the SMTP server
+  startTlsRequired: false # require STARTTLS; connection fails if the upgrade command is not supported
+  sslEnable: false # enable SSL/TLS wrapper for implicit TLS (typically used with port 465)
+  sslTrust: "" # optional trusted host override, e.g. "smtp.example.com" or "*"; defaults to "*" (trust all) when empty
+  sslCheckServerIdentity: false # enable hostname verification when using SSL/TLS
+
+telegram:
+  enabled: false # set to 'true' to enable Telegram bot integration
+  botToken: "" # Telegram bot token obtained from BotFather
+  botUsername: "" # Telegram bot username (without @)
+  pipelineInboxFolder: telegram # Name of the pipeline inbox folder for Telegram uploads
+  customFolderSuffix: true # set to 'true' to allow users to specify custom target folders via UserID
+  enableAllowUserIDs: true # set to 'true' to restrict access to specific Telegram user IDs
+  allowUserIDs: [] # List of allowed Telegram user IDs (e.g. [123456789, 987654321]). Leave empty to allow all users.
+  enableAllowChannelIDs: true # set to 'true' to restrict access to specific Telegram channel IDs
+  allowChannelIDs: [] # List of allowed Telegram channel IDs (e.g. [-1001234567890, -1009876543210]). Leave empty to allow all channels.
+  processingTimeoutSeconds: 180 # Maximum time in seconds to wait for processing a Telegram request
+  pollingIntervalMillis: 2000 # Interval in milliseconds between polling for new messages
+  feedback:
+    channel:
+      noValidDocument: true # set to 'false' to hide/suppress feedback messages in channels (to avoid spam)
+      errorProcessing: true # set to 'false' to hide/suppress feedback messages in channels (to avoid spam)
+      errorMessage: true # set to 'false' to hide/suppress error messages in channels (to avoid spam)
+      processing: true # set to 'false' to hide/suppress processing messages in channels (to avoid spam)
+    user:
+      noValidDocument: true # set to 'false' to hide/suppress feedback messages to users (to avoid spam)
+      errorProcessing: true # set to 'false' to hide/suppress feedback messages to users (to avoid spam)
+      errorMessage: true # set to 'false' to hide/suppress error messages to users (to avoid spam)
+      processing: true # set to 'false' to hide/suppress processing messages to users (to avoid spam)
 
 legal:
   termsAndConditions: https://www.stirlingpdf.com/terms-and-conditions # URL to the terms and conditions of your application (e.g. https://example.com/terms). Empty string to disable or filename to load from local file in static folder
@@ -119,16 +156,25 @@ system:
   enableAlphaFunctionality: false # set to enable functionality which might need more testing before it fully goes live (this feature might make no changes)
   showUpdate: false # see when a new update is available
   showUpdateOnlyAdmin: false # only admins can see when a new update is available, depending on showUpdate it must be set to 'true'
+  showSettingsWhenNoLogin: true # set to 'false' to hide settings button when login is disabled (enableLogin: false). Only applies when login is disabled.
   customHTMLFiles: false # enable to have files placed in /customFiles/templates override the existing template HTML files
   tessdataDir: /usr/share/tessdata # path to the directory containing the Tessdata files. This setting is relevant for Windows systems. For Windows users, this path should be adjusted to point to the appropriate directory where the Tessdata files are stored.
   enableAnalytics: false # Master toggle for analytics: set to 'true' to enable all analytics, 'false' to disable all analytics, or leave as 'null' to prompt admin on first launch
+  enableDesktopInstallSlide: true # Set to 'false' to hide the desktop app installation slide in the onboarding flow
   enablePosthog: null # Enable PostHog analytics (open-source product analytics): set to 'true' to enable, 'false' to disable, or 'null' to enable by default when analytics is enabled
   enableScarf: null # Enable Scarf tracking pixel: set to 'true' to enable, 'false' to disable, or 'null' to enable by default when analytics is enabled
   enableUrlToPDF: false # Set to 'true' to enable URL to PDF, INTERNAL ONLY, known security issues, should not be used externally
   disableSanitize: false # set to true to disable Sanitize HTML; (can lead to injections in HTML)
   maxDPI: 500 # Maximum allowed DPI for PDF to image conversion
-  corsAllowedOrigins: [] # List of allowed origins for CORS (e.g. ['http://localhost:5173', 'https://app.example.com']). Leave empty to disable CORS.
-  frontendUrl: '' # Base URL for frontend (e.g. 'https://pdf.example.com'). Used for generating invite links in emails. If empty, falls back to backend URL.
+  corsAllowedOrigins: [] # List of allowed origins for CORS (e.g. ['http://localhost:5173', 'https://app.example.com']). Leave empty to disable CORS. For local development with frontend on port 5173, add 'http://localhost:5173'
+  backendUrl: "" # Backend base URL for SAML/OAuth/API callbacks (e.g. 'http://localhost:8080' for dev, 'https://api.example.com' for production). REQUIRED for SSO authentication to work correctly. This is where your IdP will send SAML responses and OAuth callbacks. Leave empty to default to 'http://localhost:8080' in development.
+  frontendUrl: '' # Frontend URL for invite email links (e.g. 'https://app.example.com'). Optional - if not set, will use backendUrl. This is the URL users click in invite emails.
+  enableMobileScanner: false # Enable mobile phone QR code upload feature. Requires frontendUrl to be configured.
+  mobileScannerSettings:
+    convertToPdf: true # Automatically convert uploaded images to PDF format. If false, images are kept as-is.
+    imageResolution: full # Image resolution for mobile uploads: 'full' (original size) or 'reduced' (max 1200px on longest side). Only applies when convertToPdf is true.
+    pageFormat: A4 # Page format for converted PDFs: 'keep' (original image dimensions), 'A4' (A4 page size), or 'letter' (US Letter page size). Only applies when convertToPdf is true.
+    stretchToFit: false # Whether to stretch images to fill the entire page (may distort aspect ratio). If false, images are centered with preserved aspect ratio. Only applies when convertToPdf is true.
   serverCertificate:
     enabled: true # Enable server-side certificate for "Sign with Stirling-PDF" option
     organizationName: Stirling-PDF # Organization name for generated certificates
@@ -140,7 +186,7 @@ system:
       level: MEDIUM # Security level: MAX (whitelist only), MEDIUM (block internal networks), OFF (no restrictions)
       allowedDomains: [] # Whitelist of allowed domains (e.g. ['cdn.example.com', 'images.google.com'])
       blockedDomains: [] # Additional domains to block (e.g. ['evil.com', 'malicious.org'])
-      internalTlds: ['.local', '.internal', '.corp', '.home'] # Block domains with these TLD patterns
+      internalTlds: [.local, .internal, .corp, .home] # Block domains with these TLD patterns
       blockPrivateNetworks: true # Block RFC 1918 private networks (10.x.x.x, 192.168.x.x, 172.16-31.x.x)
       blockLocalhost: true # Block localhost and loopback addresses (127.x.x.x, ::1)
       blockLinkLocal: true # Block link-local addresses (169.254.x.x, fe80::/10)
@@ -161,6 +207,9 @@ system:
     operations:
       weasyprint: '' # Defaults to /opt/venv/bin/weasyprint
       unoconvert: '' # Defaults to /opt/venv/bin/unoconvert
+      calibre: "" # Defaults to /usr/bin/ebook-convert
+      ocrmypdf: "" # Defaults to /usr/bin/ocrmypdf
+      soffice: "" # Defaults to /usr/bin/soffice
   fileUploadLimit: '' # Defaults to "". No limit when string is empty. Set a number, between 0 and 999, followed by one of the following strings to set a limit. "KB", "MB", "GB".
   tempFileManagement:
     baseTmpDir: '' # Defaults to java.io.tmpdir/stirling-pdf
@@ -172,24 +221,7 @@ system:
     startupCleanup: true # Clean up old temp files on startup
     cleanupSystemTemp: false # Whether to clean broader system temp directory
   databaseBackup:
-    cron: '0 0 0 * * ?' # Cron expression for automatic database backups "0 0 0 * * ?" daily at midnight
-
-stirling:
-  pdf:
-    fallback-font: classpath:/static/fonts/NotoSans-Regular.ttf # Override to point at a custom fallback font
-    json:
-      font-normalization:
-        enabled: false # IMPORTANT: Disable to preserve ToUnicode CMaps for correct font rendering. Ghostscript strips Unicode mappings from CID fonts.
-      cff-converter:
-        enabled: true # Wrap CFF/Type1C fonts as OpenType-CFF for browser compatibility
-        method: python # Converter method: 'python' (fontTools, recommended - wraps as OTF), 'fontforge' (legacy - converts to TTF, may hang on CID fonts)
-        python-command: /opt/venv/bin/python3 # Python interpreter path
-        python-script: /scripts/convert_cff_to_ttf.py # Path to font wrapping script
-        fontforge-command: fontforge # Override if FontForge is installed under a different name/path
-      type3:
-        library:
-          enabled: true # Match common Type3 fonts against the built-in library of converted programs
-          index: classpath:/type3/library/index.json # Override to point at a custom index.json (supports http:, file:, classpath:)
+    cron: 0 0 0 * * ? # Cron expression for automatic database backups "0 0 0 * * ?" daily at midnight
 
 ui:
   appNameNavbar: '' # name displayed on the navigation bar
@@ -207,11 +239,23 @@ metrics:
 AutomaticallyGenerated:
   key: b2c65aac-c7a5-4052-8f53-7adcd0806d95
   UUID: 9cc0a600-3171-445f-b577-410b6bb731c2
-  appVersion: 2.0.1
+  appVersion: 2.3.1
 
 processExecutor:
+  autoUnoServer: true # true: use local pool based on libreOfficeSessionLimit; false: use unoServerEndpoints
+  unoServerEndpoints: [] # Used when autoUnoServer is false
+  # Example manual endpoints (uncomment to use):
+  # unoServerEndpoints:
+  #   - host: "127.0.0.1"
+  #     port: 2003
+  #     hostLocation: "auto"  # auto|local|remote (use "remote" for port-forwarded servers)
+  #     protocol: "http"       # http|https
+  #   - host: "remote-server.local"
+  #     port: 8080
+  #     hostLocation: "remote"
+  #     protocol: "https"
   sessionLimit: # Process executor instances limits
-    libreOfficeSessionLimit: 1
+    libreOfficeSessionLimit: 1 # Each additional uno server adds ~50MB idle RAM
     pdfToHtmlSessionLimit: 1
     qpdfSessionLimit: 4
     tesseractSessionLimit: 1
@@ -219,6 +263,7 @@ processExecutor:
     weasyPrintSessionLimit: 16
     installAppSessionLimit: 1
     calibreSessionLimit: 1
+    imageMagickSessionLimit: 4
     ghostscriptSessionLimit: 8
     ocrMyPdfSessionLimit: 2
   timeoutMinutes: # Process executor timeout in minutes
@@ -228,7 +273,26 @@ processExecutor:
     weasyPrinttimeoutMinutes: 30
     installApptimeoutMinutes: 60
     calibretimeoutMinutes: 30
+    imageMagickTimeoutMinutes: 30
     tesseractTimeoutMinutes: 30
     qpdfTimeoutMinutes: 30
     ghostscriptTimeoutMinutes: 30
     ocrMyPdfTimeoutMinutes: 30
+
+pdfEditor:
+  fallback-font: classpath:/static/fonts/NotoSans-Regular.ttf # Override to point at a custom fallback font
+  cache:
+    max-bytes: -1 # Max in-memory cache size in bytes; -1 disables byte cap
+    max-percent: 20 # Max in-memory cache as % of JVM max; used when max-bytes <= 0
+  font-normalization:
+    enabled: false # IMPORTANT: Disable to preserve ToUnicode CMaps for correct font rendering. Ghostscript strips Unicode mappings from CID fonts.
+  cff-converter:
+    enabled: true # Wrap CFF/Type1CFF fonts as OpenType-CFF for browser compatibility
+    method: python # Converter method: 'python' (fontTools, recommended - wraps as OTF), 'fontforge' (legacy - converts to TTF, may hang on CID fonts)
+    python-command: /opt/venv/bin/python3 # Python interpreter path
+    python-script: /scripts/convert_cff_to_ttf.py # Path to font wrapping script
+    fontforge-command: fontforge # Override if FontForge is installed under a different name/path
+  type3:
+    library:
+      enabled: true # Match common Type3 fonts against the built-in library of converted programs
+      index: classpath:/type3/library/index.json # Override to point at a custom index.json (supports http:, file:, classpath:)

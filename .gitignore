@@ -1,2 +1,4 @@
 .aider*
 /.env.global
+/db
+/.encryption_key
