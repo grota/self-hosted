@@ -1,3 +1,0 @@
-[submodule "gpt-researcher/upstream"]
-	path = gpt-researcher/upstream
-	url = git@github.com:assafelovic/gpt-researcher.git
