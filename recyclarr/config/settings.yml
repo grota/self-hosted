@@ -1,9 +1,14 @@
 # yaml-language-server: $schema=https://raw.githubusercontent.com/recyclarr/recyclarr/master/schemas/settings-schema.json
 
-repositories:
-  trash_guides:
-      clone_url: https://github.com/grota/trash-guides.git
-      branch: master
-  config_templates:
-      clone_url: https://github.com/recyclarr/config-templates.git
-      branch: master
+resource_providers:
+  - name: trash_guides
+    type: trash-guides
+    clone_url: https://github.com/grota/trash-guides.git
+    reference: master
+    replace_default: true
+
+  - name: config_templates
+    type: config-templates
+    clone_url: https://github.com/recyclarr/config-templates.git
+    reference: master
+    replace_default: true
