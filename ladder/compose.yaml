@@ -1,0 +1,30 @@
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml
+
+services:
+  ladder:
+    image: ghcr.io/everywall/ladder:latest
+    container_name: ladder
+    restart: unless-stopped
+    #command: sh -c ./ladder
+    environment:
+      PORT: 8080
+      # RULESET: /app/ruleset.yaml
+      RULESET: https://raw.githubusercontent.com/everywall/ladder-rules/main/ruleset.yaml
+      # ALLOWED_DOMAINS: example.com,example.org
+      # ALLOWED_DOMAINS_RULESET: false
+      # EXPOSE_RULESET: true
+      # PREFORK: false
+      # DISABLE_FORM: false
+      # FORM_PATH: /app/form.html
+      # X_FORWARDED_FOR: 66.249.66.1
+      # USER_AGENT: Mozilla/5.0 (compatible; Googlebot/2.1; +http://www.google.com/bot.html)
+      # USERPASS: foo:bar
+      LOG_URLS: true
+      # GODEBUG: netdns=go
+      FLARESOLVERR_HOST: http://prowlarr.home.lab
+    # ports:
+    #   - "8080:8080"
+    volumes:
+      - ./ruleset.yaml:/app/ruleset.yaml
+      - ./handlers/form.html:/app/form.html

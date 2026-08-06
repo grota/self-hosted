@@ -9,7 +9,7 @@ services:
     # ports:
     #   - 3000:3000
     environment:
-      HOMEPAGE_ALLOWED_HOSTS: home.lab
+      HOMEPAGE_ALLOWED_HOSTS: home.lab,home.giusepperota.com
 
     volumes:
       - ./config:/app/config
