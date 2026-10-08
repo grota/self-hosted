@@ -1,0 +1,22 @@
+include:
+  - ../compose-snippets/network-for-nginx-proxy.yaml
+
+services:
+  homebox-ng:
+    image: ghcr.io/grota/homebox-ng:latest
+    restart: unless-stopped
+    container_name: homebox-ng
+    volumes:
+      - ./data:/data
+    environment:
+      SESSION_SECRET:
+    extends:
+      file: ../compose-snippets/logging-limits.yaml
+      service: logging
+    labels:
+      - homepage.group=Apps
+      - homepage.name=homebox-ng
+      - homepage.href=//homebox-ng.home.lab
+      - homepage.icon=sh-homebox
+      - homepage.description=Home Inventory
+      - homepage.weight=10
